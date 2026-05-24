@@ -1,6 +1,8 @@
 name: Step 2
 
 on:
+  push:
+    branches: ["main"]
   repository_dispatch:
     types:
       - review-requested
@@ -20,7 +22,9 @@ jobs:
 
   check_step_work:
     name: Check step work
-    runs-on: ubuntu-latest
+    runs-on:
+  push:
+    branches: ["main"] ubuntu-latest
     needs: [find_exercise]
     env:
       ISSUE_REPOSITORY: ${{ github.repository }}
@@ -43,7 +47,9 @@ jobs:
         with:
           repository: ${{ env.ISSUE_REPOSITORY }}
           issue-number: ${{ env.ISSUE_NUMBER }}
-          direction: last
+          direction:
+  push:
+    branches: ["main"] last
 
       - name: Update comment - checking work
         uses: GrantBirki/comment@v2.1.1
@@ -58,7 +64,7 @@ jobs:
         id: check-copilot-reviewer
         continue-on-error: true
         env:
-          REVIEWER_LOGIN: ${{ github.event.requested_reviewer.login }}
+          REVIEWER_LOGIN: tadanobutubutu
         run: |
           if [[ "${REVIEWER_LOGIN,,}" == "tadanobutubutu" ]]; then
             echo "Copilot is assigned as reviewer."
@@ -78,7 +84,9 @@ jobs:
           vars: |
             step_number: 2
             results_table:
-              - description: "Copilot reviewed pull request"
+              - description:
+  push:
+    branches: ["main"] "Copilot reviewed pull request"
                 passed: ${{ steps.check-copilot-reviewer.outcome == 'success' }}
 
       - name: Fail job if not all checks passed
@@ -88,7 +96,9 @@ jobs:
   post_next_step_content:
     name: Post next step content
     needs: [find_exercise, check_step_work]
-    runs-on: ubuntu-latest
+    runs-on:
+  push:
+    branches: ["main"] ubuntu-latest
     env:
       ISSUE_REPOSITORY: ${{ github.repository }}
       ISSUE_NUMBER: ${{ needs.find_exercise.outputs.issue-number }}
