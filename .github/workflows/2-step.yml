@@ -1,9 +1,9 @@
 name: Step 2
 
 on:
-  pull_request:
+  repository_dispatch:
     types:
-      - review_requested
+      - review-requested
 
 permissions:
   contents: write
