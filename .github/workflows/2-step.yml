@@ -3,6 +3,8 @@ name: Step 2
 on:
   push:
     branches: ["main"]
+  push:
+    branches: ["main"]
   repository_dispatch:
     types:
       - review-requested
@@ -23,6 +25,8 @@ jobs:
   check_step_work:
     name: Check step work
     runs-on:
+  push:
+    branches: ["main"]
   push:
     branches: ["main"] ubuntu-latest
     needs: [find_exercise]
@@ -49,6 +53,8 @@ jobs:
           issue-number: ${{ env.ISSUE_NUMBER }}
           direction:
   push:
+    branches: ["main"]
+  push:
     branches: ["main"] last
 
       - name: Update comment - checking work
@@ -64,7 +70,7 @@ jobs:
         id: check-copilot-reviewer
         continue-on-error: true
         env:
-          REVIEWER_LOGIN: tadanobutubutu
+          REVIEWER_LOGIN: copilot
         run: |
           if [[ "${REVIEWER_LOGIN,,}" == "tadanobutubutu" ]]; then
             echo "Copilot is assigned as reviewer."
@@ -86,6 +92,8 @@ jobs:
             results_table:
               - description:
   push:
+    branches: ["main"]
+  push:
     branches: ["main"] "Copilot reviewed pull request"
                 passed: ${{ steps.check-copilot-reviewer.outcome == 'success' }}
 
@@ -97,6 +105,8 @@ jobs:
     name: Post next step content
     needs: [find_exercise, check_step_work]
     runs-on:
+  push:
+    branches: ["main"]
   push:
     branches: ["main"] ubuntu-latest
     env:
